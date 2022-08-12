@@ -13,7 +13,7 @@ public class ConnectionUtil {
 	private static Connection connection;
 
 	public static Connection getConnection(String connectionString, String connectionUsername,
-			String connectionPassword, String driverName) throws SQLException {
+			String connectionPassword, String driverName, String databaseName) throws SQLException {
 		if (connection != null && !connection.isClosed()) {
 			return connection;
 		} else {
