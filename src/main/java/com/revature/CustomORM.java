@@ -1,4 +1,4 @@
-package com.revature.models;
+package com.revature;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -16,9 +16,7 @@ public class CustomORM {
 	private String databaseName;
 
 //	This probably shouldn't be callable
-//	public customORM() {
-//		System.out.println("Default Constructor won't work");
-//	}
+	
 
 	public CustomORM(String connectionString, String connectionUsername, String connectionPassword, String driverName, String databaseName) {
 		super();
@@ -29,10 +27,14 @@ public class CustomORM {
 		this.setDatabaseName(databaseName);
 	}
 	
-	public boolean createTable(String tableName) {
-		//Check if table exists.
-		//If it does exist print an error to the return 
-		
+//	public boolean createTable(String tableName) {
+//		//Check if table exists.
+//		//If it does exist print an error to the return 
+//		
+//	}
+
+	public CustomORM() {
+		super();
 	}
 
 	// returns my connection object, or maybe should set it as a instance variable
@@ -45,6 +47,10 @@ public class CustomORM {
 		}
 		return null;
 	}
+	
+	public boolean createDB(String db) {
+		String sql = "";
+	}
 
 	public static void main(String[] args) {
 		CustomORM customORM = new CustomORM(
@@ -54,7 +60,25 @@ public class CustomORM {
 		Connection connection = customORM.getConnection();
 		if (connection!=null) {
 			System.out.println("Connection to DB succesful");
+		} else {
+			System.out.println("Connection unsuccesful");
 		}
+	}
+
+	public void setConnectionString(String connectionString) {
+		this.connectionString = connectionString;
+	}
+
+	public void setConnectionUsername(String connectionUsername) {
+		this.connectionUsername = connectionUsername;
+	}
+
+	public void setConnectionPassword(String connectionPassword) {
+		this.connectionPassword = connectionPassword;
+	}
+
+	public void setDriverName(String driverName) {
+		this.driverName = driverName;
 	}
 
 	public String getDatabaseName() {
