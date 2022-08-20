@@ -11,8 +11,8 @@ public class ConnectionUtil {
 	// connection here is a singleton
 
 	private static Connection connection;
-	
-	// overloaded method connects to a specific database 
+
+	// overloaded method connects to a specific database
 	public static Connection getConnection(String connectionString, String connectionUsername,
 			String connectionPassword, String driverName) throws SQLException {
 		if (connection != null && !connection.isClosed()) {
@@ -24,15 +24,25 @@ public class ConnectionUtil {
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			}
-			
+
 			String url = connectionString;
 			String username = connectionUsername; // It is possible to hide raw credentials by using ENV variables
 			String password = connectionPassword; // You can access those variables with System.getenv("var-name");
-			
+
 			connection = DriverManager.getConnection(url, username, password);
 
 			return connection;
 
+		}
+	}
+
+	public static void main(String[] args) {
+		try {
+			getConnection("jdbc:postgresql://javafs220725.cgbxdd5yszbt.us-east-2.rds.amazonaws.com:5432/movies",
+					"postgres", "password", "org.postgresql.Driver");
+			System.out.println("Connection Successful");
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
 	}
 }
