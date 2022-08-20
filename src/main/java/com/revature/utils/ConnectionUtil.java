@@ -11,33 +11,10 @@ public class ConnectionUtil {
 	// connection here is a singleton
 
 	private static Connection connection;
-
-	public static Connection getConnection(String connectionString, String connectionUsername,
-			String connectionPassword, String driverName) throws SQLException {
-		if (connection != null && !connection.isClosed()) {
-			return connection;
-		} else {
-
-			try {
-				Class.forName(driverName);
-			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
-			}
-
-			String url = connectionString;
-			String username = connectionUsername; // It is possible to hide raw credentials by using ENV variables
-			String password = connectionPassword; // You can access those variables with System.getenv("var-name");
-
-			connection = DriverManager.getConnection(url, username, password);
-
-			return connection;
-
-		}
-	}
 	
 	// overloaded method connects to a specific database 
 	public static Connection getConnection(String connectionString, String connectionUsername,
-			String connectionPassword, String driverName, String databaseName) throws SQLException {
+			String connectionPassword, String driverName) throws SQLException {
 		if (connection != null && !connection.isClosed()) {
 			return connection;
 		} else {
@@ -51,8 +28,6 @@ public class ConnectionUtil {
 			String url = connectionString;
 			String username = connectionUsername; // It is possible to hide raw credentials by using ENV variables
 			String password = connectionPassword; // You can access those variables with System.getenv("var-name");
-
-			url = url.concat(databaseName);
 			
 			connection = DriverManager.getConnection(url, username, password);
 

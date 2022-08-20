@@ -25,10 +25,5 @@ public class CustomORMTest {
 		customORM.setDatabaseName(databaseName);
 	}
 	
-	@Test
-	public void createDB() {
-		
-	}
-	
 	
 }

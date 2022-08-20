@@ -1,0 +1,67 @@
+CREATE TABLE movies(
+	movie_id serial PRIMARY KEY,
+	title TEXT,
+	image_url TEXT,
+	description TEXT,
+	genre TEXT
+);
+
+CREATE TABLE actors(
+	actor_id serial PRIMARY KEY,
+	actor_name TEXT
+);
+
+CREATE TABLE tags(
+	tag_id serial PRIMARY KEY,
+	tag_name TEXT
+);
+
+CREATE TABLE movie_actor(
+	movie_id INT REFERENCES movies (movie_id) ON UPDATE CASCADE ON DELETE CASCADE,
+	actor_id INT REFERENCES actors (actor_id) ON UPDATE CASCADE,
+	PRIMARY KEY (movie_id, actor_id)
+);
+
+CREATE TABLE movie_tag(
+	movie_id INT REFERENCES movies (movie_id) ON UPDATE CASCADE ON DELETE CASCADE,
+	tag_id INT REFERENCES tags (tag_id) ON UPDATE CASCADE,
+	PRIMARY KEY (movie_id, tag_id)
+);
+
+
+INSERT INTO movies(title, image_url, description, genre) VALUES (
+	'Avengers',
+	'https://images.fineartamerica.com/images/artworkimages/mediumlarge/1/avengers-infinity-war-movie-poster-prints.jpg',
+	'A historic movie of people that need to defeat a large purple guy',
+	'action'
+);
+
+INSERT INTO actors(actor_name) VALUES ('Robert Downey Jr.');
+INSERT INTO actors(actor_name) VALUES ('Chris Hemsworth');
+INSERT INTO actors(actor_name) VALUES ('Ryan Gosling');
+
+INSERT INTO movie_actor(movie_id, actor_id) VALUES (
+	(SELECT movie_id FROM movies WHERE movies.title = 'Avengers'),
+	(SELECT actor_id FROM actors WHERE actors.actor_name  = 'Robert Downey Jr.')
+);
+
+INSERT INTO movie_actor(movie_id, actor_id) VALUES (
+	(SELECT movie_id FROM movies WHERE movies.title = 'Avengers'),
+	(SELECT actor_id FROM actors WHERE actors.actor_name  = 'Chris Hemsworth')
+);
+
+INSERT INTO movie_actor(movie_id, actor_id) VALUES (
+	(SELECT movie_id FROM movies WHERE movies.title = 'Avengers'),
+	(SELECT actor_id FROM actors WHERE actors.actor_name  = 'Ryan Gosling')
+);
+
+SELECT * 
+	FROM movie_actor AS m_a 
+	JOIN actors AS a ON m_a.actor_id = a.actor_id
+	WHERE m_a.movie_id = (SELECT movie_id FROM movies WHERE movies.title = 'Avengers');
+
+DROP TABLE movies;
+DROP TABLE tags;
+DROP TABLE movie_tag;
+DROP TABLE actors;
+DROP TABLE movie_actor;
