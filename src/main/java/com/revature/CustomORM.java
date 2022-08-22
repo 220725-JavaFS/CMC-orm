@@ -9,7 +9,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -73,33 +72,6 @@ public class CustomORM {
 			e.printStackTrace();
 		}
 		return null;
-	}
-
-	private Object convertStringToFieldType(String input, Class<?> type)
-			throws IllegalAccessException, InstantiationException, IllegalArgumentException, InvocationTargetException,
-			NoSuchMethodException, SecurityException {
-		switch (type.getName()) {
-		case "byte":
-			return Byte.valueOf(input);
-		case "short":
-			return Short.valueOf(input);
-		case "int":
-			return Integer.valueOf(input);
-		case "long":
-			return Long.valueOf(input);
-		case "double":
-			return Double.valueOf(input);
-		case "float":
-			return Float.valueOf(input);
-		case "boolean":
-			return Boolean.valueOf(input);
-		case "java.lang.String":
-			return input;
-		case "java.time.LocalDate":
-			return LocalDate.parse(input);
-		default:
-			return type.getDeclaredConstructor().newInstance();
-		}
 	}
 
 	public LinkedList<Object> getJoin(Object object_1, Object object_2) {
